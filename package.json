@@ -1,0 +1,27 @@
+{
+  "name": "memory",
+  "version": "1.0.0",
+  "description": "A memory game built in elm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "client": "webpack-dev-server --port 3000"
+  },
+  "author": "Will Farrell",
+  "license": "MIT",
+  "dependencies": {
+    "ace-css": "^1.1.0",
+    "css-loader": "^1.0.0",
+    "elm-webpack-loader": "^4.5.0",
+    "file-loader": "^2.0.0",
+    "font-awesome": "^4.7.0",
+    "style-loader": "^0.22.1",
+    "url-loader": "^1.1.1",
+    "webpack": "^4.17.1",
+    "webpack-dev-server": "^3.1.5"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.1.2"
+  }
+}
