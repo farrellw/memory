@@ -1,5 +1,6 @@
 "use strict";
 
+require("./app.css");
 // Require index.html so it gets copied to dist
 require("./index.html");
 
