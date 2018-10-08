@@ -4,9 +4,10 @@
   "description": "A memory game built in elm",
   "main": "index.js",
   "scripts": {
+    "start": "npm run start:client",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "client": "webpack-dev-server --port 3000"
+    "start:client": "webpack-dev-server --port 3000"
   },
   "author": "Will Farrell",
   "license": "MIT",

@@ -1,7 +1,14 @@
 .game-table {
+    display: grid;
+    justify-items: center;
+    align-items: center;
 }
 
 .game-table td {
-    min-width: 50px;
-    min-height: 50px;
+    min-width: 100px;
+    min-height: 100px;
+}
+
+.game-table tr {
+    min-height: 100px;
 }
