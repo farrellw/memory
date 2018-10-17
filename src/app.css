@@ -1,14 +1,19 @@
 .game-table {
     display: grid;
-    justify-items: center;
-    align-items: center;
 }
 
-.game-table td {
-    min-width: 100px;
+.row {
     min-height: 100px;
 }
 
-.game-table tr {
-    min-height: 100px;
+.cell {
+    margin: 50px;
+}
+
+.matched {
+    background: blue;
+}
+
+.flipped {
+    background: green;
 }

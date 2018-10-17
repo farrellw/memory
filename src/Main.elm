@@ -1,34 +1,50 @@
 module Main exposing (..)
 
+-- Try Map First
+-- Try A dictionary next
+
 import Html exposing (program)
+import Models exposing (AllSquares, Model, Square)
 import Msgs exposing (Msg)
+import Update exposing (update)
 import View exposing (view)
 
 
--- MODEL
+-- Initial Model
 
 
-type alias Model =
-    String
+initialModel : Model
+initialModel =
+    [ { matched = False
+      , clicked = False
+      , text = "A"
+      , id = 1
+      }
+    , { matched = False
+      , clicked = False
+      , text = "B"
+      , id = 2
+      }
+    , { matched = False
+      , clicked = False
+      , text = "A"
+      , id = 3
+      }
+    , { matched = False
+      , clicked = False
+      , text = "B"
+      , id = 4
+      }
+    ]
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( "Hello", Cmd.none )
+    ( initialModel, Cmd.none )
 
 
 
 -- UPDATE
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        Msgs.NoOp ->
-            ( model, Cmd.none )
-
-
-
 -- SUBSCRIPTIONS
 
 
