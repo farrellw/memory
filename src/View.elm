@@ -37,12 +37,9 @@ buildClassList square =
         classList =
             if square.state == Models.Opened then
                 "flipped"
+            else if square.state == Models.Matched then
+                "matched"
             else
                 ""
-                    ++ (if square.state == Models.Matched then
-                            "matched"
-                        else
-                            ""
-                       )
     in
     classList

@@ -11,20 +11,53 @@ update msg model =
             ( model, Cmd.none )
 
         Msgs.ClickBox square ->
-            ( updateIsClicked square.id model
+            ( model
+                |> updateIsClicked square.id
+                |> updateSuccess
+                |> turnBackOver
             , Cmd.none
             )
 
 
+turnBackOver : List Square -> Model
+turnBackOver squares =
+    if List.length (List.filter (\square -> filterClicked square) squares) == 2 then
+        List.map (\square -> turnClosed square) squares
+    else
+        squares
 
--- Msg.CheckSuccess ->
---     ( updateIsClicked model, Cmd.none )
--- filterOnlyClicked : List Square -> List Square
--- filterOnlyClicked =
---     isMatch
--- updateSuccess : Model -> List Square -> Model
--- updateSuccess model squares =
---     model
+
+turnClosed : Square -> Square
+turnClosed square =
+    if square.state == Models.Opened then
+        { square | state = Models.Closed }
+    else
+        square
+
+
+filterClicked : Square -> Bool
+filterClicked square =
+    square.state == Models.Opened
+
+
+updateSuccess : List Square -> Model
+updateSuccess squares =
+    if haveMatch (List.filter (\square -> filterClicked square) squares) then
+        Debug.log "I have a match"
+            List.map
+            (\square -> matchSquare square)
+            squares
+    else
+        Debug.log "NO no match"
+            squares
+
+
+matchSquare : Square -> Square
+matchSquare square =
+    if square.state == Models.Opened then
+        { square | state = Models.Matched }
+    else
+        square
 
 
 updateIsClicked : Int -> List Square -> List Square
