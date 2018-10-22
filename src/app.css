@@ -1,9 +1,7 @@
 .game-table {
     display: grid;
-}
-
-.row {
-    min-height: 100px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1em;
 }
 
 .cell {

@@ -11,21 +11,14 @@ view : Model -> Html Msg
 view model =
     div
         [ class "game-table" ]
-        (buildRows model)
-
-
-buildRows : List Square -> List (Html Msg)
-buildRows squares =
-    [ div [ class "row" ]
         (List.map
-            squareRow
-            squares
+            squareIntoCell
+            model
         )
-    ]
 
 
-squareRow : Square -> Html Msg
-squareRow square =
+squareIntoCell : Square -> Html Msg
+squareIntoCell square =
     let
         message =
             Msgs.ClickBox square
