@@ -12,74 +12,79 @@ update msg model =
 
         Msgs.ClickBox square ->
             ( model
-                |> updateIsClicked square.id
-                |> updateSuccess
-                |> turnBackOver
+                |> updateOpenedSquares square.id
+                |> updateMatchedSquares
+                |> updateClosedSquares
             , Cmd.none
             )
 
 
-turnBackOver : List Square -> Model
-turnBackOver squares =
-    if List.length (List.filter (\square -> filterClicked square) squares) == 2 then
-        List.map (\square -> turnClosed square) squares
-    else
-        squares
-
-
-turnClosed : Square -> Square
-turnClosed square =
-    if square.state == Models.Opened then
-        { square | state = Models.Closed }
-    else
-        square
-
-
-filterClicked : Square -> Bool
-filterClicked square =
-    square.state == Models.Opened
-
-
-updateSuccess : List Square -> Model
-updateSuccess squares =
-    if haveMatch (List.filter (\square -> filterClicked square) squares) then
-        List.map
-            (\square -> matchSquare square)
-            squares
-    else
-        squares
-
-
-matchSquare : Square -> Square
-matchSquare square =
-    if square.state == Models.Opened then
-        { square | state = Models.Matched }
-    else
-        square
-
-
-updateIsClicked : Int -> List Square -> List Square
-updateIsClicked id squares =
+updateOpenedSquares : Int -> List Square -> List Square
+updateOpenedSquares id squares =
     let
         updatedSquares =
-            List.map (\square -> updateSquare square id) squares
+            List.map (\square -> openSelectedSquare square id) squares
     in
     updatedSquares
 
 
-updateSquare : Square -> Int -> Square
-updateSquare square id =
+openSelectedSquare : Square -> Int -> Square
+openSelectedSquare square id =
     if square.id == id && square.state == Models.Closed then
         { square | state = Models.Opened }
     else
         square
 
 
-haveMatch : List Square -> Bool
-haveMatch squares =
+updateMatchedSquares : List Square -> Model
+updateMatchedSquares squares =
+    if matchExists (filterOpened squares) then
+        List.map
+            (\square -> matchOpenedSquare square)
+            squares
+    else
+        squares
+
+
+matchOpenedSquare : Square -> Square
+matchOpenedSquare square =
+    if square.state == Models.Opened then
+        { square | state = Models.Matched }
+    else
+        square
+
+
+matchExists : List Square -> Bool
+matchExists squares =
     case squares of
         a :: b :: [] ->
             a.text == b.text
 
         _ ->
             False
+
+
+updateClosedSquares : List Square -> Model
+updateClosedSquares squares =
+    if List.length (filterOpened squares) >= 2 then
+        List.map (\square -> closeOpenedSquare square) squares
+    else
+        squares
+
+
+closeOpenedSquare : Square -> Square
+closeOpenedSquare square =
+    if square.state == Models.Opened then
+        { square | state = Models.Closed }
+    else
+        square
+
+
+filterOpened : List Square -> List Square
+filterOpened squares =
+    List.filter (\square -> isOpened square) squares
+
+
+isOpened : Square -> Bool
+isOpened square =
+    square.state == Models.Opened
