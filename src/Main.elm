@@ -15,23 +15,19 @@ import View exposing (view)
 
 initialModel : Model
 initialModel =
-    [ { matched = False
-      , clicked = False
+    [ { state = Models.Closed
       , text = "A"
       , id = 1
       }
-    , { matched = False
-      , clicked = False
+    , { state = Models.Closed
       , text = "B"
       , id = 2
       }
-    , { matched = False
-      , clicked = False
+    , { state = Models.Closed
       , text = "A"
       , id = 3
       }
-    , { matched = False
-      , clicked = False
+    , { state = Models.Closed
       , text = "B"
       , id = 4
       }

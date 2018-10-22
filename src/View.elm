@@ -35,11 +35,11 @@ buildClassList : Square -> String
 buildClassList square =
     let
         classList =
-            if square.clicked == True then
+            if square.state == Models.Opened then
                 "flipped"
             else
                 ""
-                    ++ (if square.matched == True then
+                    ++ (if square.state == Models.Matched then
                             "matched"
                         else
                             ""

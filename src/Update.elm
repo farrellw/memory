@@ -11,11 +11,24 @@ update msg model =
             ( model, Cmd.none )
 
         Msgs.ClickBox square ->
-            ( mapSquares model square.id, Cmd.none )
+            ( updateIsClicked square.id model
+            , Cmd.none
+            )
 
 
-mapSquares : List Square -> Int -> List Square
-mapSquares squares id =
+
+-- Msg.CheckSuccess ->
+--     ( updateIsClicked model, Cmd.none )
+-- filterOnlyClicked : List Square -> List Square
+-- filterOnlyClicked =
+--     isMatch
+-- updateSuccess : Model -> List Square -> Model
+-- updateSuccess model squares =
+--     model
+
+
+updateIsClicked : Int -> List Square -> List Square
+updateIsClicked id squares =
     let
         updatedSquares =
             List.map (\square -> updateSquare square id) squares
@@ -26,6 +39,16 @@ mapSquares squares id =
 updateSquare : Square -> Int -> Square
 updateSquare square id =
     if square.id == id then
-        { square | clicked = True }
+        { square | state = Models.Opened }
     else
         square
+
+
+haveMatch : List Square -> Bool
+haveMatch squares =
+    case squares of
+        a :: b :: [] ->
+            a.text == b.text
+
+        _ ->
+            False
