@@ -10,44 +10,26 @@ import Update exposing (update)
 import View exposing (view)
 
 
+possibleTexts : List String
+possibleTexts =
+    [ "A", "B", "G", "H", "C", "F", "D", "A", "D", "E", "C", "E", "F", "B", "G", "H" ]
+
+
+newModel : Int -> String -> Square
+newModel index label =
+    { state = Models.Closed
+    , text = label
+    , id = index
+    }
+
+
+
 -- Initial Model
 
 
 initialModel : Model
 initialModel =
-    [ { state = Models.Closed
-      , text = "A"
-      , id = 1
-      }
-    , { state = Models.Closed
-      , text = "B"
-      , id = 2
-      }
-    , { state = Models.Closed
-      , text = "A"
-      , id = 3
-      }
-    , { state = Models.Closed
-      , text = "B"
-      , id = 4
-      }
-    , { state = Models.Closed
-      , text = "C"
-      , id = 5
-      }
-    , { state = Models.Closed
-      , text = "C"
-      , id = 6
-      }
-    , { state = Models.Closed
-      , text = "D"
-      , id = 7
-      }
-    , { state = Models.Closed
-      , text = "D"
-      , id = 8
-      }
-    ]
+    List.indexedMap (\index value -> newModel index value) possibleTexts
 
 
 init : ( Model, Cmd Msg )

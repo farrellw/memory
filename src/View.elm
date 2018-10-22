@@ -32,6 +32,10 @@ squareIntoCell square =
         ]
 
 
+
+-- Use Pattern Match (case / switch statement)
+
+
 buildClassList : Square -> String
 buildClassList square =
     let
