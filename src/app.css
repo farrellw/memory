@@ -9,14 +9,15 @@
 .cell {
     background-color: tan;
     display: inline-block;
+    margin: 10px;
 }
 
 .matched {
-    background: blue;
+    background: purple;
+    font-weight: bold;
 }
 
 .flipped {
-    background: green;
 }
 
 .closed {

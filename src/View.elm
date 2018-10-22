@@ -11,12 +11,17 @@ view : Model -> Html Msg
 view model =
     div
         [ class "game-table" ]
-        [ div [ class "row" ]
-            (List.map
-                squareRow
-                model
-            )
-        ]
+        (buildRows model)
+
+
+buildRows : List Square -> List (Html Msg)
+buildRows squares =
+    [ div [ class "row" ]
+        (List.map
+            squareRow
+            squares
+        )
+    ]
 
 
 squareRow : Square -> Html Msg

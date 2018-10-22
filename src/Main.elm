@@ -31,6 +31,22 @@ initialModel =
       , text = "B"
       , id = 4
       }
+    , { state = Models.Closed
+      , text = "C"
+      , id = 5
+      }
+    , { state = Models.Closed
+      , text = "C"
+      , id = 6
+      }
+    , { state = Models.Closed
+      , text = "D"
+      , id = 7
+      }
+    , { state = Models.Closed
+      , text = "D"
+      , id = 8
+      }
     ]
 
 
