@@ -69,7 +69,7 @@ updateIsClicked id squares =
 
 updateSquare : Square -> Int -> Square
 updateSquare square id =
-    if square.id == id then
+    if square.id == id && square.state == Models.Closed then
         { square | state = Models.Opened }
     else
         square
