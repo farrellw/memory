@@ -43,13 +43,11 @@ filterClicked square =
 updateSuccess : List Square -> Model
 updateSuccess squares =
     if haveMatch (List.filter (\square -> filterClicked square) squares) then
-        Debug.log "I have a match"
-            List.map
+        List.map
             (\square -> matchSquare square)
             squares
     else
-        Debug.log "NO no match"
-            squares
+        squares
 
 
 matchSquare : Square -> Square
