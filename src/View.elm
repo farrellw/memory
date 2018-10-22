@@ -1,6 +1,6 @@
 module View exposing (..)
 
-import Html exposing (Html, div, program, span, table, td, text, tr)
+import Html exposing (Html, div, i, program, span, table, td, text, tr)
 import Html.Attributes exposing (attribute, class)
 import Html.Events exposing (onClick)
 import Models exposing (AllSquares, Model, Square)
@@ -28,17 +28,22 @@ squareRow square =
         classList =
             buildClassList square
     in
-    span [ class classList, onClick message ] [ text square.text ]
+    div [ class "cell", onClick message ]
+        [ Html.i [ class "fa fa-check-circle" ] []
+        , span [ class classList ] [ text square.text ]
+        ]
 
 
 buildClassList : Square -> String
 buildClassList square =
     let
         classList =
-            if square.state == Models.Opened then
-                "flipped"
+            if square.state == Models.Closed then
+                "cell closed"
+            else if square.state == Models.Opened then
+                "cell flipped"
             else if square.state == Models.Matched then
-                "matched"
+                "cell matched"
             else
                 ""
     in

@@ -7,7 +7,8 @@
 }
 
 .cell {
-    margin: 50px;
+    background-color: tan;
+    display: inline-block;
 }
 
 .matched {
@@ -16,4 +17,8 @@
 
 .flipped {
     background: green;
+}
+
+.closed {
+    color: tan;
 }
