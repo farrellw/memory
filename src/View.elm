@@ -13,7 +13,7 @@ view model =
         [ class "game-table" ]
         (List.map
             squareIntoCell
-            model
+            model.squares
         )
 
 

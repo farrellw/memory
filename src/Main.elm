@@ -4,7 +4,7 @@ module Main exposing (..)
 -- Try A dictionary next
 
 import Html exposing (program)
-import Models exposing (AllSquares, Model, Square)
+import Models exposing (AllSquares, Model, Square, GameState)
 import Msgs exposing (Msg)
 import Update exposing (update)
 import View exposing (view)
@@ -29,7 +29,10 @@ newModel index label =
 
 initialModel : Model
 initialModel =
-    List.indexedMap (\index value -> newModel index value) possibleTexts
+    {
+        squares = List.indexedMap (\index value -> newModel index value) possibleTexts
+        , state = Models.Clickable
+    }
 
 
 init : ( Model, Cmd Msg )

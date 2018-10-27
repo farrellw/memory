@@ -1,6 +1,6 @@
 module Update exposing (..)
 
-import Models exposing (Model, Square)
+import Models exposing (Model, Square, GameState)
 import Msgs exposing (Msg)
 import Time exposing(Time, second)
 import Process exposing (sleep)
@@ -14,13 +14,13 @@ update msg model =
             ( model, Cmd.none )
 
         Msgs.ClickBox square ->
-            ( model
+            ( model.squares
                 |> updateOpenedSquares square.id
                 |> updateMatchedSquares
             , delay (second * 2) Msgs.CloseSquares
             )
         Msgs.CloseSquares ->
-            ( updateClosedSquares model
+            ( updateClosedSquares model.squares
             , Cmd.none
             )    
 
@@ -50,12 +50,18 @@ openSelectedSquare square id =
 updateMatchedSquares : List Square -> Model
 updateMatchedSquares squares =
     if matchExists (filterOpened squares) then
-        List.map
+        updateGameStateToFrozen (List.map
             (\square -> matchOpenedSquare square)
-            squares
+            squares)
     else
-        squares
+        updateGameStateToFrozen squares
 
+updateGameStateToFrozen : List Square -> Model
+updateGameStateToFrozen squares = 
+    {
+        squares = squares
+        , state = Models.Frozen
+    }
 
 matchOpenedSquare : Square -> Square
 matchOpenedSquare square =
@@ -78,10 +84,16 @@ matchExists squares =
 updateClosedSquares : List Square -> Model
 updateClosedSquares squares =
     if List.length (filterOpened squares) >= 2 then
-        List.map (\square -> closeOpenedSquare square) squares
+        updateGameStateToClickable (List.map (\square -> closeOpenedSquare square) squares)
     else
-        squares
+        updateGameStateToClickable squares
 
+updateGameStateToClickable : List Square -> Model
+updateGameStateToClickable squares = 
+    {
+        squares = squares 
+        , state = Models.Clickable
+    }
 
 closeOpenedSquare : Square -> Square
 closeOpenedSquare square =
