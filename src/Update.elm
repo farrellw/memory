@@ -50,18 +50,11 @@ openSelectedSquare square id =
 updateMatchedSquares : List Square -> Model
 updateMatchedSquares squares =
     if matchExists (filterOpened squares) then
-        updateGameStateToFrozen (List.map
+        updateGameState (List.map
             (\square -> matchOpenedSquare square)
             squares)
     else
-        updateGameStateToFrozen squares
-
-updateGameStateToFrozen : List Square -> Model
-updateGameStateToFrozen squares = 
-    {
-        squares = squares
-        , state = Models.Frozen
-    }
+        updateGameState squares
 
 matchOpenedSquare : Square -> Square
 matchOpenedSquare square =
@@ -84,16 +77,9 @@ matchExists squares =
 updateClosedSquares : List Square -> Model
 updateClosedSquares squares =
     if List.length (filterOpened squares) >= 2 then
-        updateGameStateToClickable (List.map (\square -> closeOpenedSquare square) squares)
+        updateGameState (List.map (\square -> closeOpenedSquare square) squares)
     else
-        updateGameStateToClickable squares
-
-updateGameStateToClickable : List Square -> Model
-updateGameStateToClickable squares = 
-    {
-        squares = squares 
-        , state = Models.Clickable
-    }
+        updateGameState squares
 
 closeOpenedSquare : Square -> Square
 closeOpenedSquare square =
@@ -111,3 +97,17 @@ filterOpened squares =
 isOpened : Square -> Bool
 isOpened square =
     square.state == Models.Opened
+
+
+updateGameState : List Square -> Model
+updateGameState squares = 
+    if List.length (filterOpened squares) >= 2 then
+        {
+        squares = squares
+        , state = Models.Frozen
+        }
+    else 
+        {
+            squares = squares
+            , state = Models.Clickable
+        }    
