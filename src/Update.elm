@@ -2,6 +2,9 @@ module Update exposing (..)
 
 import Models exposing (Model, Square)
 import Msgs exposing (Msg)
+import Time exposing(Time, second)
+import Process exposing (sleep)
+import Task exposing(perform)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -14,9 +17,17 @@ update msg model =
             ( model
                 |> updateOpenedSquares square.id
                 |> updateMatchedSquares
-                |> updateClosedSquares
-            , Cmd.none
+            , delay (second * 2) Msgs.CloseSquares
             )
+        Msgs.CloseSquares ->
+            ( updateClosedSquares model
+            , Cmd.none
+            )    
+
+delay : Time -> msg -> Cmd msg
+delay time msg =
+  sleep time
+  |> perform (\_ -> msg)
 
 
 updateOpenedSquares : Int -> List Square -> List Square
