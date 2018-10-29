@@ -1,6 +1,6 @@
 module Update exposing (..)
 
-import Models exposing (GameState, Model, Square)
+import Models exposing (Model, Square)
 import Msgs exposing (Msg)
 import Process exposing (sleep)
 import Random exposing (generate)
@@ -11,6 +11,16 @@ import Time exposing (Time, second)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
+    updateFromModel (updateFromMessage msg model)
+
+
+updateFromModel : ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
+updateFromModel ( model, msg ) =
+    ( model, msg )
+
+
+updateFromMessage : Msg -> Model -> ( Model, Cmd Msg )
+updateFromMessage msg model =
     case msg of
         Msgs.NoOp ->
             ( model, Cmd.none )
