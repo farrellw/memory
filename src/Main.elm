@@ -1,7 +1,7 @@
 module Main exposing (..)
 
 import Html exposing (program)
-import Models exposing (AllSquares, GameState, Model, Square)
+import Models exposing (GameState, Model, Square)
 import Msgs exposing (Msg)
 import Update exposing (restartGame, update)
 import View exposing (view)

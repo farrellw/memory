@@ -2,7 +2,7 @@ module Models exposing (..)
 
 
 type alias Model =
-    { squares : AllSquares
+    { squares : List Square
     , state : GameState
     }
 
@@ -11,10 +11,6 @@ type GameState
     = Frozen
     | Clickable
     | GameOver
-
-
-type alias AllSquares =
-    List Square
 
 
 type SquareState

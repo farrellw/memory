@@ -3,7 +3,7 @@ module View exposing (..)
 import Html exposing (Html, button, div, i, program, span, table, td, text, tr)
 import Html.Attributes exposing (attribute, class)
 import Html.Events exposing (onClick)
-import Models exposing (AllSquares, Model, Square)
+import Models exposing (Model, Square)
 import Msgs exposing (..)
 
 
