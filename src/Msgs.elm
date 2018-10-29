@@ -5,11 +5,7 @@ import Models exposing (AllSquares, Square)
 
 type Msg
     = NoOp
-    | ClickBox Square
-    | RandomizeSquares AllSquares
-    | CloseSquares
     | RestartGame
-
-
-
--- | CheckSuccess
+    | RandomizeSquares AllSquares
+    | ClickBox Square
+    | CloseSquares

@@ -1,8 +1,5 @@
 module Main exposing (..)
 
--- Try Map First
--- Try A dictionary next
-
 import Html exposing (program)
 import Models exposing (AllSquares, GameState, Model, Square)
 import Msgs exposing (Msg)
@@ -40,7 +37,6 @@ init =
 
 
 
--- UPDATE
 -- SUBSCRIPTIONS
 
 
