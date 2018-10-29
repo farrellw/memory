@@ -17,7 +17,7 @@ update msg model =
 
         Msgs.RestartGame ->
             ( model
-            , restartGame model.squares
+            , restartGame (flipAllClosed model.squares)
             )
 
         Msgs.RandomizeSquares randomSquares ->
@@ -101,6 +101,16 @@ matchExists squares =
             False
 
 
+flipAllClosed : List Square -> List Square
+flipAllClosed squares =
+    List.map (\square -> closeSquare square) squares
+
+
+closeSquare : Square -> Square
+closeSquare square =
+    { square | state = Models.Closed }
+
+
 updateClosedSquares : List Square -> Model
 updateClosedSquares squares =
     if List.length (filterOpened squares) >= 2 then
@@ -112,7 +122,7 @@ updateClosedSquares squares =
 closeOpenedSquare : Square -> Square
 closeOpenedSquare square =
     if square.state == Models.Opened then
-        { square | state = Models.Closed }
+        closeSquare square
     else
         square
 
