@@ -14,7 +14,7 @@ import View exposing (view)
 
 possibleTexts : List String
 possibleTexts =
-    [ "A", "B", "G", "H", "C", "F", "D", "A", "D", "E", "C", "E", "F", "B", "G", "H" ]
+    [ "\x1F92A", "\x1F929", "😃", "😄", "😂", "\x1F920", "😤", "\x1F92A", "😤", "\x1F913", "😂", "\x1F913", "\x1F920", "\x1F929", "😃", "😄" ]
 
 
 newModel : Int -> String -> Square

@@ -27,7 +27,15 @@ squareIntoCell square =
             buildClassList square
     in
     div [ class classList, onClick message ]
-        [ span [] [ text square.text ]
+        [ case square.state of
+            Models.Closed ->
+                text ""
+
+            Models.Opened ->
+                span [] [ text square.text ]
+
+            Models.Matched ->
+                span [] [ text square.text ]
         ]
 
 
