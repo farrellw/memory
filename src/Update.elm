@@ -3,6 +3,8 @@ module Update exposing (..)
 import Models exposing (GameState, Model, Square)
 import Msgs exposing (Msg)
 import Process exposing (sleep)
+import Random exposing (Seed, generate)
+import Random.List exposing (shuffle)
 import Task exposing (perform)
 import Time exposing (Time, second)
 
@@ -12,6 +14,11 @@ update msg model =
     case msg of
         Msgs.NoOp ->
             ( model, Cmd.none )
+
+        Msgs.RestartGame ->
+            ( model
+            , restartGame model.squares
+            )
 
         Msgs.RandomizeSquares randomSquares ->
             ( { squares = randomSquares
@@ -34,6 +41,11 @@ update msg model =
             ( updateClosedSquares model.squares
             , Cmd.none
             )
+
+
+restartGame : List Square -> Cmd Msg
+restartGame squares =
+    generate Msgs.RandomizeSquares (shuffle squares)
 
 
 delay : Time -> msg -> Cmd msg

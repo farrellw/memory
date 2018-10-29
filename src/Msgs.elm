@@ -8,6 +8,7 @@ type Msg
     | ClickBox Square
     | RandomizeSquares AllSquares
     | CloseSquares
+    | RestartGame
 
 
 

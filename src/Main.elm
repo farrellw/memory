@@ -6,9 +6,7 @@ module Main exposing (..)
 import Html exposing (program)
 import Models exposing (AllSquares, GameState, Model, Square)
 import Msgs exposing (Msg)
-import Random exposing (Seed, generate)
-import Random.List exposing (shuffle)
-import Update exposing (update)
+import Update exposing (restartGame, update)
 import View exposing (view)
 
 
@@ -38,7 +36,7 @@ initialModel =
 
 init : ( Model, Cmd Msg )
 init =
-    ( initialModel, generate Msgs.RandomizeSquares (shuffle initialModel.squares) )
+    ( initialModel, restartGame initialModel.squares )
 
 
 
