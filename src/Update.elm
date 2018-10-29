@@ -1,10 +1,10 @@
 module Update exposing (..)
 
-import Models exposing (Model, Square, GameState)
+import Models exposing (GameState, Model, Square)
 import Msgs exposing (Msg)
-import Time exposing(Time, second)
 import Process exposing (sleep)
-import Task exposing(perform)
+import Task exposing (perform)
+import Time exposing (Time, second)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -14,20 +14,25 @@ update msg model =
             ( model, Cmd.none )
 
         Msgs.ClickBox square ->
-            ( model.squares
-                |> updateOpenedSquares square.id
-                |> updateMatchedSquares
-            , delay (second * 2) Msgs.CloseSquares
-            )
+            if model.state == Models.Clickable then
+                ( model.squares
+                    |> updateOpenedSquares square.id
+                    |> updateMatchedSquares
+                , delay (second * 2) Msgs.CloseSquares
+                )
+            else
+                ( model, Cmd.none )
+
         Msgs.CloseSquares ->
             ( updateClosedSquares model.squares
             , Cmd.none
-            )    
+            )
+
 
 delay : Time -> msg -> Cmd msg
 delay time msg =
-  sleep time
-  |> perform (\_ -> msg)
+    sleep time
+        |> perform (\_ -> msg)
 
 
 updateOpenedSquares : Int -> List Square -> List Square
@@ -50,11 +55,14 @@ openSelectedSquare square id =
 updateMatchedSquares : List Square -> Model
 updateMatchedSquares squares =
     if matchExists (filterOpened squares) then
-        updateGameState (List.map
-            (\square -> matchOpenedSquare square)
-            squares)
+        updateGameState
+            (List.map
+                (\square -> matchOpenedSquare square)
+                squares
+            )
     else
         updateGameState squares
+
 
 matchOpenedSquare : Square -> Square
 matchOpenedSquare square =
@@ -81,6 +89,7 @@ updateClosedSquares squares =
     else
         updateGameState squares
 
+
 closeOpenedSquare : Square -> Square
 closeOpenedSquare square =
     if square.state == Models.Opened then
@@ -100,14 +109,12 @@ isOpened square =
 
 
 updateGameState : List Square -> Model
-updateGameState squares = 
+updateGameState squares =
     if List.length (filterOpened squares) >= 2 then
-        {
-        squares = squares
+        { squares = squares
         , state = Models.Frozen
         }
-    else 
-        {
-            squares = squares
-            , state = Models.Clickable
-        }    
+    else
+        { squares = squares
+        , state = Models.Clickable
+        }
