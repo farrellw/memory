@@ -13,6 +13,13 @@ update msg model =
         Msgs.NoOp ->
             ( model, Cmd.none )
 
+        Msgs.RandomizeSquares randomSquares ->
+            ( { squares = randomSquares
+              , state = model.state
+              }
+            , Cmd.none
+            )
+
         Msgs.ClickBox square ->
             if model.state == Models.Clickable then
                 ( model.squares

@@ -1,11 +1,12 @@
 module Msgs exposing (..)
 
-import Models exposing (Square)
+import Models exposing (AllSquares, Square)
 
 
 type Msg
     = NoOp
     | ClickBox Square
+    | RandomizeSquares AllSquares
     | CloseSquares
 
 

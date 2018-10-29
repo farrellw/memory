@@ -4,8 +4,10 @@ module Main exposing (..)
 -- Try A dictionary next
 
 import Html exposing (program)
-import Models exposing (AllSquares, Model, Square, GameState)
+import Models exposing (AllSquares, GameState, Model, Square)
 import Msgs exposing (Msg)
+import Random exposing (Seed, generate)
+import Random.List exposing (shuffle)
 import Update exposing (update)
 import View exposing (view)
 
@@ -29,15 +31,14 @@ newModel index label =
 
 initialModel : Model
 initialModel =
-    {
-        squares = List.indexedMap (\index value -> newModel index value) possibleTexts
-        , state = Models.Clickable
+    { squares = List.indexedMap (\index value -> newModel index value) possibleTexts
+    , state = Models.Clickable
     }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( initialModel, Cmd.none )
+    ( initialModel, generate Msgs.RandomizeSquares (shuffle initialModel.squares) )
 
 
 

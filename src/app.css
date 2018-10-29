@@ -2,22 +2,31 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 1em;
+    margin: 0 auto;
+    max-width: 64em;
+    padding: 0;
 }
 
 .cell {
-    background-color: tan;
+    background-color: #ffcc33;
     display: inline-block;
     margin: 10px;
+    height: 10vw;
+    max-height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .matched {
-    background: purple;
+    background: #339933;
     font-weight: bold;
 }
 
 .flipped {
+    background: #ff9900;
 }
 
 .closed {
-    color: tan;
+    color: #ffcc33;
 }

@@ -26,9 +26,8 @@ squareIntoCell square =
         classList =
             buildClassList square
     in
-    div [ class "cell", onClick message ]
-        [ Html.i [ class "fa fa-check-circle" ] []
-        , span [ class classList ] [ text square.text ]
+    div [ class classList, onClick message ]
+        [ span [] [ text square.text ]
         ]
 
 
@@ -47,6 +46,6 @@ buildClassList square =
             else if square.state == Models.Matched then
                 "cell matched"
             else
-                ""
+                "cell"
     in
     classList
