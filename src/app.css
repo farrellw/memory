@@ -31,3 +31,26 @@
 .closed {
     background-color: #ffcc33;
 }
+
+.score-board {
+    margin: auto;
+    max-width: 15em;
+    text-align: center;
+    background: #cccfd1;
+}
+
+#restart-button {
+    padding: .5em;
+    margin: 1em;
+    color: white;
+    background: #ff4488;
+    font-size: 100%;
+}
+
+#total-points {
+    padding: .5em;
+    margin: 1em;
+    font-size: 125%;
+    color: black;
+    display: inline-block;
+}
