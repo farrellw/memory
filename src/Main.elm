@@ -12,8 +12,8 @@ possibleTexts =
     [ "\x1F92A", "\x1F929", "😃", "😄", "😂", "\x1F920", "😤", "\x1F92A", "😤", "\x1F913", "😂", "\x1F913", "\x1F920", "\x1F929", "😃", "😄" ]
 
 
-newModel : Int -> String -> Square
-newModel index label =
+newSquare : Int -> String -> Square
+newSquare index label =
     { state = Models.Closed
     , text = label
     , id = index
@@ -26,7 +26,7 @@ newModel index label =
 
 initialModel : Model
 initialModel =
-    { squares = List.indexedMap (\index value -> newModel index value) possibleTexts
+    { squares = List.indexedMap (\index value -> newSquare index value) possibleTexts
     , state = Models.Clickable
     }
 
