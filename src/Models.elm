@@ -4,6 +4,7 @@ module Models exposing (..)
 type alias Model =
     { squares : List Square
     , state : GameState
+    , points : Int
     }
 
 

@@ -28,6 +28,7 @@ initialModel : Model
 initialModel =
     { squares = List.indexedMap (\index value -> newSquare index value) possibleTexts
     , state = Models.Clickable
+    , points = 0
     }
 
 

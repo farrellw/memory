@@ -33,22 +33,27 @@ updateFromMessage msg model =
         Msgs.RandomizeSquares randomSquares ->
             ( { squares = randomSquares
               , state = model.state
+              , points = model.points
               }
             , Cmd.none
             )
 
         Msgs.ClickBox square ->
             if model.state == Models.Clickable then
-                ( model.squares
-                    |> updateOpenedSquares square.id
-                    |> updateMatchedSquares
+                ( updateGameState
+                    { model
+                        | squares =
+                            model.squares
+                                |> updateOpenedSquares square.id
+                                |> updateMatchedSquares
+                    }
                 , delay (second * 2) Msgs.CloseSquares
                 )
             else
                 ( model, Cmd.none )
 
         Msgs.CloseSquares ->
-            ( updateClosedSquares model.squares
+            ( updateGameState { model | squares = updateClosedSquares model.squares }
             , Cmd.none
             )
 
@@ -81,16 +86,14 @@ openSelectedSquare square id =
         square
 
 
-updateMatchedSquares : List Square -> Model
+updateMatchedSquares : List Square -> List Square
 updateMatchedSquares squares =
     if matchExists (filterOpened squares) then
-        updateGameState
-            (List.map
-                (\square -> matchOpenedSquare square)
-                squares
-            )
+        List.map
+            (\square -> matchOpenedSquare square)
+            squares
     else
-        updateGameState squares
+        squares
 
 
 matchOpenedSquare : Square -> Square
@@ -121,12 +124,12 @@ closeSquare square =
     { square | state = Models.Closed }
 
 
-updateClosedSquares : List Square -> Model
+updateClosedSquares : List Square -> List Square
 updateClosedSquares squares =
     if List.length (filterOpened squares) >= 2 then
-        updateGameState (List.map (\square -> closeOpenedSquare square) squares)
+        List.map (\square -> closeOpenedSquare square) squares
     else
-        updateGameState squares
+        squares
 
 
 closeOpenedSquare : Square -> Square
@@ -147,13 +150,13 @@ isOpened square =
     square.state == Models.Opened
 
 
-updateGameState : List Square -> Model
-updateGameState squares =
-    if List.length (filterOpened squares) >= 2 then
-        { squares = squares
-        , state = Models.Frozen
+updateGameState : Model -> Model
+updateGameState model =
+    if List.length (filterOpened model.squares) >= 2 then
+        { model
+            | state = Models.Frozen
         }
     else
-        { squares = squares
-        , state = Models.Clickable
+        { model
+            | state = Models.Clickable
         }
