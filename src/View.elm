@@ -1,6 +1,6 @@
 module View exposing (..)
 
-import Html exposing (Html, button, div, i, program, span, table, td, text, tr)
+import Html exposing (Html, button, div, i, p, program, span, table, td, text, tr)
 import Html.Attributes exposing (attribute, class)
 import Html.Events exposing (onClick)
 import Models exposing (Model, Square)
@@ -10,13 +10,27 @@ import Msgs exposing (..)
 view : Model -> Html Msg
 view model =
     div [ class "page" ]
-        [ div
-            [ class "game-table" ]
-            (List.map
-                squareIntoCell
-                model.squares
-            )
-        , button [ onClick Msgs.RestartGame ] [ text "Restart Game" ]
+        [ gameTable model
+        , footer model
+        ]
+
+
+gameTable : Model -> Html Msg
+gameTable model =
+    div
+        [ class "game-table" ]
+        (List.map
+            squareIntoCell
+            model.squares
+        )
+
+
+footer : Model -> Html Msg
+footer model =
+    div
+        [ class "footer" ]
+        [ button [ onClick Msgs.RestartGame ] [ text "Restart Game" ]
+        , span [] [ text ("Points " ++ toString model.points) ]
         ]
 
 

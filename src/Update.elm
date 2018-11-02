@@ -39,14 +39,16 @@ updateFromMessage msg model =
             )
 
         Msgs.ClickBox square ->
-            if model.state == Models.Clickable then
+            if model.state == Models.Clickable && squareIsClickable square then
                 ( updateGameState
-                    { model
-                        | squares =
-                            model.squares
-                                |> updateOpenedSquares square.id
-                                |> updateMatchedSquares
-                    }
+                    (incrementPoints
+                        { model
+                            | squares =
+                                model.squares
+                                    |> updateOpenedSquares square.id
+                                    |> updateMatchedSquares
+                        }
+                    )
                 , delay (second * 2) Msgs.CloseSquares
                 )
             else
@@ -58,9 +60,19 @@ updateFromMessage msg model =
             )
 
 
+squareIsClickable : Square -> Bool
+squareIsClickable square =
+    square.state == Models.Closed
+
+
 restartGame : List Square -> Cmd Msg
 restartGame squares =
     generate Msgs.RandomizeSquares (shuffle squares)
+
+
+incrementPoints : Model -> Model
+incrementPoints model =
+    { model | points = model.points + 1 }
 
 
 delay : Time -> msg -> Cmd msg
