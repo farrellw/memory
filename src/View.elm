@@ -1,18 +1,23 @@
-module View exposing (..)
+module View exposing (buildClassList, footer, gameTable, squareIntoCell, view)
 
-import Html exposing (Html, button, div, i, label, output, p, program, section, span, table, td, text, tr)
+import Html exposing (Html, button, div, i, label, output, p, section, span, table, td, text, tr)
 import Html.Attributes exposing (attribute, class, id)
 import Html.Events exposing (onClick)
 import Models exposing (Model, Square)
 import Msgs exposing (..)
+import Browser exposing (Document)
 
 
-view : Model -> Html Msg
+view : Model -> Document Msg
 view model =
-    div [ class "page" ]
-        [ gameTable model
-        , footer model
+    {   title = "Memory"
+        , body = [
+            div [ class "game-page" ]
+                [ gameTable model
+                    , footer model
+                ]
         ]
+    }
 
 
 gameTable : Model -> Html Msg
@@ -34,7 +39,7 @@ footer model =
                 "total-points"
             ]
             [ text "Points: "
-            , span [] [ text (toString model.points) ]
+            , span [] [ text (String.fromInt model.points) ]
             ]
         , button [ id "restart-button", onClick Msgs.RestartGame ] [ text "Restart" ]
         ]
@@ -72,10 +77,13 @@ buildClassList square =
         classList =
             if square.state == Models.Closed then
                 "cell closed"
+
             else if square.state == Models.Opened then
                 "cell flipped"
+
             else if square.state == Models.Matched then
                 "cell matched"
+
             else
                 "cell"
     in

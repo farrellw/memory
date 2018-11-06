@@ -1,4 +1,4 @@
-module Models exposing (..)
+module Models exposing (GameState(..), Model, Square, SquareState(..))
 
 
 type alias Model =

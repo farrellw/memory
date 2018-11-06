@@ -1,4 +1,4 @@
-module Update exposing (..)
+module Update exposing (closeOpenedSquare, closeSquare, delay, filterOpened, flipAllClosed, incrementPoints, isOpened, matchExists, matchOpenedSquare, openSelectedSquare, restartGame, squareIsClickable, update, updateClosedSquares, updateFromMessage, updateFromModel, updateGameState, updateMatchedSquares, updateOpenedSquares)
 
 import Models exposing (Model, Square)
 import Msgs exposing (Msg)
@@ -6,7 +6,7 @@ import Process exposing (sleep)
 import Random exposing (generate)
 import Random.List exposing (shuffle)
 import Task exposing (perform)
-import Time exposing (Time, second)
+import Time exposing (..)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -49,8 +49,9 @@ updateFromMessage msg model =
                                     |> updateMatchedSquares
                         }
                     )
-                , delay (second * 2) Msgs.CloseSquares
+                , delay (2000) Msgs.CloseSquares
                 )
+
             else
                 ( model, Cmd.none )
 
@@ -75,7 +76,7 @@ incrementPoints model =
     { model | points = model.points + 1 }
 
 
-delay : Time -> msg -> Cmd msg
+delay : Float -> msg -> Cmd msg
 delay time msg =
     sleep time
         |> perform (\_ -> msg)
@@ -94,6 +95,7 @@ openSelectedSquare : Square -> Int -> Square
 openSelectedSquare square id =
     if square.id == id && square.state == Models.Closed then
         { square | state = Models.Opened }
+
     else
         square
 
@@ -104,6 +106,7 @@ updateMatchedSquares squares =
         List.map
             (\square -> matchOpenedSquare square)
             squares
+
     else
         squares
 
@@ -112,6 +115,7 @@ matchOpenedSquare : Square -> Square
 matchOpenedSquare square =
     if square.state == Models.Opened then
         { square | state = Models.Matched }
+
     else
         square
 
@@ -140,6 +144,7 @@ updateClosedSquares : List Square -> List Square
 updateClosedSquares squares =
     if List.length (filterOpened squares) >= 2 then
         List.map (\square -> closeOpenedSquare square) squares
+
     else
         squares
 
@@ -148,6 +153,7 @@ closeOpenedSquare : Square -> Square
 closeOpenedSquare square =
     if square.state == Models.Opened then
         closeSquare square
+
     else
         square
 
@@ -168,6 +174,7 @@ updateGameState model =
         { model
             | state = Models.Frozen
         }
+
     else
         { model
             | state = Models.Clickable
