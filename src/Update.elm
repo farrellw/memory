@@ -33,7 +33,7 @@ updateFromMessage msg model =
         Msgs.RandomizeSquares randomSquares ->
             ( { squares = randomSquares
               , state = model.state
-              , points = model.points
+              , points = 0
               }
             , Cmd.none
             )
